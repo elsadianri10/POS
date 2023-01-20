@@ -273,9 +273,9 @@ Kenneth M.
 </div>
 
 <div class="card-footer">
-<form action="#" method="post">
+<form action="/logining" method="post">
 <div class="input-group">
-<input type="text" name="message" placeholder="Type Message ..." class="form-control">
+<input type="text" name="username" placeholder="username" class="form-control">
 <span class="input-group-append">
 <button type="button" class="btn btn-primary">Send</button>
 </span>

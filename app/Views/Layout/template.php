@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
 
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -160,8 +160,8 @@ Nora Silvester
 </a>
 </li>
 <li class="nav-item">
-<a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-<i class="fas fa-th-large"></i>
+<a class="nav-link" href="/logout">
+<i class="fas fa-sign-out-alt"></i>
 </a>
 </li>
 </ul>

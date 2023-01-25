@@ -178,14 +178,18 @@ Nora Silvester
 <nav class="mt-2">
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 <?php foreach ($menus as $menu) : ?>
-?>
-<li class="nav-header"><?= $menu->menu; ?></li>
+  <li class="nav-header"><?= $menu->menu; ?></li>
+  <?php $submenus = generate_submenu($menu->id, session('userID')); ?>
+  <?php foreach($submenus as $submenu): ?>
 <li class="nav-item menu-open">
-<a href="#" class="nav-link active">
+<a href="#" class="nav-link <?= ($active->submenu == $submenu->submenu) ? 'active' : ''; ?>">
+  <i class="nav-icon <?= $submenu->icon; ?>"></i>
 <p>
+  <?= $submenu->submenu; ?>
 </p>
 </a>
 </li>
+<?php endforeach; ?>
 <?php endforeach; ?>
 </ul>
 </nav>

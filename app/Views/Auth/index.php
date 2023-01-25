@@ -84,4 +84,3 @@ Remember Me
 
 <script src="assets/dist/js/adminlte.min.js?v=3.2.0"></script>
 </body>
-</html>

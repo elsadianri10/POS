@@ -43,6 +43,8 @@ class Auth extends BaseController
         } else {
             return redirect()->to('/login');
         }
+
+        
     }
         public function logout(){
             session()->destroy();

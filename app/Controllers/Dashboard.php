@@ -10,6 +10,8 @@ class Dashboard extends BaseController
     {
         if (!check_login(session('userID'))) return redirect()->to('/login');
 
+        // dd(generate_menu(session('userID')));
+
         $data = [
             'title' => 'Dashboard'
         ];

@@ -33,6 +33,9 @@ $routes->get('/', 'Dashboard::index');
 $routes->get('/login', 'Auth::index');
 $routes->post('/logining', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
+
+$routes->get('/users', 'User::index');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

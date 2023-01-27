@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AdminLTE 3 | Log in</title>
+<title>My POS Login</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 <div class="login-logo">
-<a href="assets/index2.html"><b>Admin</b>LTE</a>
+<h5 "assets/index2.html"><b>My</b>PoS</h5>
 </div>
 
 <div class="card">
@@ -25,7 +25,7 @@
 <p class="login-box-msg">Sign In</p>
 <form action="/logining" method="post">
 <div class="input-group mb-3">
-<input type="text" class="form-control" placeholder="username" name="username">
+<input type="text" class="form-control" placeholder="username" name="username" autocomplete="off" autofocus>
 <div class="input-group-append">
 <div class="input-group-text">
 <span class="fas fa-envelope"></span>

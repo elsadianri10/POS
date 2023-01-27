@@ -34,7 +34,12 @@ $routes->get('/login', 'Auth::index');
 $routes->post('/logining', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
 
-$routes->get('/users', 'User::index');
+// New User
+$routes->group('users', static function ($routes) {
+    $routes->get('', 'User::index');
+    $routes->get('newUser', 'User::getFormNew');
+    $routes->post('save', 'User::saveUser');
+});
 
 /*
  * --------------------------------------------------------------------

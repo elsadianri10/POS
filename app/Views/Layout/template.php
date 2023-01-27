@@ -171,6 +171,8 @@ All rights reserved.
 <script src="assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<?= $this->renderSection('javascript'); ?>
+
 <script>
   $('.datatable').DataTable();
 </script>

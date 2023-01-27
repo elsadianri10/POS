@@ -7,7 +7,7 @@
 <div class="card">
   <div class="card-header">
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-sn" data-toggle="modal" data-target="#addmodal">
+<button type="button" class="btn btn-primary btn-sn" id="btnNew">
   <i class="fas fa-plus"></i>
 </button>
   </div>
@@ -35,54 +35,39 @@
 </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="addmodal" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addmodalLabel">Add Anggota</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="/newUser" method="post"></form>
-      <div class="modal-body">
-        <?= $csrf_field(); ?>
-             <div class="form-group row">
-                <label for="nama" class="col-sm-2 col-form-label">Nama</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control-sm" id="Nama" name="nama">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="username" class="col-sm-2 col-form-label-sm">Username</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control-sm" id="Username" name="username">
-                </div>
-            </div>
+<div id="viewmodal" style="display: none;"></div>
+<?= $this->endsection(); ?>
 
-            <div class="form-group row">
-                        <label for="level" class="col-sm-2 col-form-label col-form-label-sm">Level</label>
-                        <div class="col-sm-10">
-                            <select id="level" class="form-control">
-                                <option selected>Choose</option>
-                                <?php foreach($levels as $level) : ?>
-                                    <option value="<?= $level->id; ?>"> <?= $level->role; ?> </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
+<?= $this->section('javascript'); ?>
 
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="Aktif" name="Aktif" value="1">
-                        <label class="custom-control-label" for="aktif">Aktif</label>
-                    </div>
-                </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+
+$(document).ready(() => {
+  $('#btnNew').click(() => {
+    $.ajax({
+      url:'users/newUser',
+      dataType: 'json',
+      beforesend: function() {
+        $('#btnNew').attr('disabled', 'disabled');
+      },
+      success: function(response) {
+        $('#btnNew').removeAttr('disabled');
+        if (response.error) {
+          if (response.error.logout) {
+            window.location.href = response.error.logout
+          }
+        } else {
+          $('#viewmodal').html(response.data).show();
+          $('#addModal').modal('show');
+        }
+      },
+      error: function(xhr, ajaxOptions, throwError) {
+        alert(xhr.status + "\n" + xhr.responseText + "\n" + throwError)
+      }
+    });
+  })
+})
+
+</script>
+
 <?= $this->endsection(); ?>

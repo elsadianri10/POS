@@ -38,6 +38,7 @@ class User extends BaseController
 
     public function getFormNew()
     {
+        helper('text');
         if ($this->request->isAJAX()) {
             //execute next process
             if (!(check_login(session('userID')))) {
@@ -49,7 +50,8 @@ class User extends BaseController
             }
 
             $data = [
-                'levels' => $this->roleModel->find()
+                'levels' => $this->roleModel->find(),
+                'password' => random_string('alnum', 8)
             ];
 
             $msg = [
@@ -92,14 +94,31 @@ class User extends BaseController
                         'required' => '{field} harus diisi',
                         'is_unique' => '{field} sudah terdaftar',
                         'min_length' => '{field} harus terdiri dari minimal 3 karakter',
-                    ]
+                        ]
                     ],
+                    'level' => [
+                    'label' => 'Level',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} harus diisi',
+                        ]
+                    ],
+                    'password' => [
+                        'label' => 'Password',
+                        'rules' => 'required|min_length[8]',
+                        'errors' => [
+                            'required' => '{field} harus diisi',
+                            'min_length' => '{field} harus terdiri dari minimal 8 karakter',
+                        ]
+                    ]
             ]);
             if(!$valid) {
                 $msg = [
                     'error' => [
                         'nama' => $validation->getError('nama'),
-                        'username' => $validation->getError('username')
+                        'username' => $validation->getError('username'),
+                        'level' => $validation->getError('level'),
+                        'password' => $validation->getError('password'),
                     ]
                 ];
                 

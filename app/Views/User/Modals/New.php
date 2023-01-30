@@ -32,9 +32,19 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="password" name="password" readonly value="<?= $password; ?>">
+                            <div id="errPassword" class="invalid-feedback">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="level" class="col-sm-2 col-form-label col-form-label-sm">Level</label>
                         <div class="col-sm-10">
-                            <select id="level" class="form-control">
+                            <select id="level" class="form-control" name="level">
                                 <option selected>Choose</option>
                                 <?php foreach ($levels as $level) : ?>
                                     <option value="<?= $level->id; ?>"> <?= $level->role; ?> </option>
@@ -96,6 +106,23 @@
                         $('#username').removeClass('is-invalid');
                         $('#errUsername').html('');
                     }
+
+                    if (response.error.level) {
+                        $('#level').addClass('is-invalid');
+                        $('#errLevel').html(response.error.level);
+                    } else {
+                        $('#level').removeClass('is-invalid');
+                        $('#errLevel').html('');
+                    }
+
+                    if (response.error.password) {
+                        $('#password').addClass('is-invalid');
+                        $('#errPassword').html(response.error.password);
+                    } else {
+                        $('#password').removeClass('is-invalid');
+                        $('#errPassword').html('');
+                    }
+
                 } else {
                     $('#viewModal').html(response.data).show();
                     $('#addModal').modal('show');

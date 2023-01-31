@@ -45,7 +45,7 @@
                         <label for="level" class="col-sm-2 col-form-label col-form-label-sm">Level</label>
                         <div class="col-sm-10">
                             <select id="level" class="form-control" name="level">
-                                <option selected>Choose</option>
+                                <option value="" selected>Choose</option>
                                 <?php foreach ($levels as $level) : ?>
                                     <option value="<?= $level->id; ?>"> <?= $level->role; ?> </option>
                                 <?php endforeach; ?>
@@ -71,14 +71,15 @@
 </div>
 
 <script>
-    $('.formSubmit').submit((e) => {
+    // $(document).ready() => {
+    $('.formSubmit').submit(function(e) {
         e.preventDefault();
 
         $.ajax({
             type: 'post',
-            url: 'users/save',
-            data: $(this).serialize(),
-            dataType: 'json',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
             beforeSend: function() {
                 $('#btnProcess').attr('disabled', 'disabled');
                 $('#btnProcess').html('<i class="fa fa-spin fa-spinner"></i>');
@@ -124,13 +125,12 @@
                     }
 
                 } else {
-                    $('#viewModal').html(response.data).show();
-                    $('#addModal').modal('show');
+                    window.location.reload()
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
             }
         });
-    })
+    }) //}
 </script>

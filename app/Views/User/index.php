@@ -12,6 +12,13 @@
 </button>
   </div>
   <div class="card-body">
+
+  <?php if (session()->getFlashdata('message')) : ?>
+  <div class="alert <?= session()->getFlashdata('message'); ?>" role="alert">
+  <?= session()->getFlashdata('message'); ?>
+</div>
+<?php endif; ?>
+
     <table class="table table-hover datatable text-center">
         <thead>
             <th style="width: 40px;">#</th>
@@ -42,6 +49,13 @@
 
 <script>
 
+    // For Allert Purpose
+        window.setTimeout(function() {
+            $(".alert").fadeTo(1000, 0).slideUp(1000, function() {
+                $(this).remove();
+            });
+        }, 5000);
+
 $(document).ready(() => {
   $('#btnNew').click(() => {
     $.ajax({
@@ -66,6 +80,7 @@ $(document).ready(() => {
       }
     });
   })
+
 })
 
 </script>

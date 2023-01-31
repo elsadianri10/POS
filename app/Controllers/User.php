@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AnggotaModel;
 use App\Models\SubmenuModel;
 use App\Models\RoleModel;
+use Exception;
 
 class User extends BaseController
 {
@@ -77,7 +78,7 @@ class User extends BaseController
                 echo json_encode($msg);
                 return;
             }
-
+            // Awal Validasi
             $validation = \Config\Services::validation();
             $valid = $this->validate([
                 'nama' => [
@@ -124,6 +125,46 @@ class User extends BaseController
                 
                 echo json_encode($msg);
                 return;
+            }
+            //Akhir Validasi
+
+            $nama = $this->request->getPost('nama') ? $this->request->getPost('nama') : '';
+            $username = $this->request->getPost('username') ? $this->request->getPost('username') : '';
+            $password = $this->request->getPost('password') ? $this->request->getPost('password') : '';
+            $level = $this->request->getPost('level') ? $this->request->getPost('level') : '';
+            $aktif = $this->request->getPost('aktif') == 1 ? 1 : 0;
+
+            $data = [
+                'nama' => htmlspecialchars($nama, true),
+                'username' => htmlspecialchars($username, true),
+                'password' => password_hash(htmlspecialchars($password, true), PASSWORD_DEFAULT),
+                'level' => htmlspecialchars($level, true),
+                'aktif' => htmlspecialchars($aktif, true),
+            ];
+
+            try{
+                if ($this->anggotamodel->save($data)) {
+                    $alert = [
+                        'message' => 'User Berhasil Ditambahkan',
+                        'alert' => 'alert-success'
+                    ];
+
+                    $msg = [
+                        'process' => 'Process success'
+                    ];
+                }
+            } catch (Exception $e) {
+                $alert = [
+                        'message' => 'User Tidak Berhasil Ditambahkan<br>', $e->getMessage(),
+                        'alert' => 'alert-danger'
+                    ];
+
+                    $msg = [
+                        'process' => 'Process Terminated'
+                    ];
+            } finally {
+                session()->setFlashdata($alert);
+                echo json_encode($msg);
             }
         } else {
             return redirect()->to('user');

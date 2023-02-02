@@ -33,7 +33,10 @@
                         <td><?= $no++; ?></td>
                         <td><?= ucwords($user->nama); ?></td>
                         <td><?= $user->role; ?></td>
-                        <td></td>
+                        <td>
+                          <button class="btn btn-info btn-sm" onclick="editUser(<?= $user->id; ?>)"><i class="fas fa-pencil-alt"></i></button>
+                          <button class="btn btn-danger btn-sm"onclick="deleteUser(<?= $user->id; ?>)"><i class="fas fa-trash"></i></button>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
         </tbody>
@@ -55,6 +58,62 @@
                 $(this).remove();
             });
         }, 5000);
+
+function editUser(id) {
+  $.ajax({
+    type: 'post',
+      url:'users/editUser',
+      data: {
+        id
+      },
+      dataType: 'json',
+      beforesend: function() {
+        $('.btn').attr('disabled', 'disabled');
+      },
+      success: function(response) {
+        $('.btn').removeAttr('disabled');
+        if (response.error) {
+          if (response.error.logout) {
+            window.location.href = response.error.logout
+          }
+        } else {
+          $('#viewmodal').html(response.data).show();
+          $('#editModal').modal('show');
+        }
+      },
+      error: function(xhr, ajaxOptions, throwError) {
+        alert(xhr.status + "\n" + xhr.responseText + "\n" + throwError)
+      }
+    });
+}
+
+function deleteUser(id) {
+  $.ajax({
+    type: 'post',
+      url:'users/deleteUser',
+      data: {
+        id
+      },
+      dataType: 'json',
+      beforesend: function() {
+        $('.btn').attr('disabled', 'disabled');
+      },
+      success: function(response) {
+        $('.btn').removeAttr('disabled');
+        if (response.error) {
+          if (response.error.logout) {
+            window.location.href = response.error.logout
+          }
+        } else {
+          $('#viewmodal').html(response.data).show();
+          $('#deleteModal').modal('show');
+        }
+      },
+      error: function(xhr, ajaxOptions, throwError) {
+        alert(xhr.status + "\n" + xhr.responseText + "\n" + throwError)
+      }
+    });
+}
 
 $(document).ready(() => {
   $('#btnNew').click(() => {
